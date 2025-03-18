@@ -69,8 +69,16 @@ body {
   .game-info {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 18px;
+    color: #2D4A22;
+  }
+  
+  .player-scores {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 16px;
     color: #2D4A22;
   }
   
@@ -151,4 +159,3 @@ body {
   #restartBtn:hover {
     background-color: #B88836;
   }
-  

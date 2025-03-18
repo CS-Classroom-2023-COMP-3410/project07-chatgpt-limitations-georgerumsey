@@ -8,6 +8,13 @@ const gridColsInput = document.getElementById("gridCols");
 const welcomeContainer = document.querySelector(".welcome-container");
 const gameContainer = document.querySelector(".game-container");
 
+const currentPlayerDisplay = document.getElementById("currentPlayer");
+const player1ScoreDisplay = document.getElementById("player1Score");
+const player2ScoreDisplay = document.getElementById("player2Score");
+
+let currentPlayer = 1;
+let playerScores = { 1: 0, 2: 0 };
+
 let cards = [];
 let flippedCards = [];
 let moves = 0;
@@ -55,6 +62,9 @@ function initializeGame() {
   createGrid();
   resetGameInfo();
   startTimer(); // ✅ Fix: Ensure the timer starts when the game begins
+  currentPlayer = 1;
+  playerScores = { 1: 0, 2: 0 };
+  updatePlayerInfo();
 }
 
 function shuffleArray(array) {
@@ -113,19 +123,33 @@ function checkForMatch() {
     card1.classList.add("matched");
     card2.classList.add("matched");
     flippedCards = [];
+    playerScores[currentPlayer]++;
+    updatePlayerInfo();
     
     // Check if all cards are matched
     if (document.querySelectorAll(".card.matched").length === cards.length) {
       clearInterval(timerInterval);
-      alert(`Game completed in ${moves} moves and ${formatTime(timeElapsed)}!`);
+      alert(`Game completed! Player 1: ${playerScores[1]} matches, Player 2: ${playerScores[2]} matches.`);
     }
   } else {
     setTimeout(() => {
       card1.classList.remove("flipped");
       card2.classList.remove("flipped");
       flippedCards = [];
+      switchPlayer();
     }, 1000);
   }
+}
+
+function switchPlayer() {
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
+  updatePlayerInfo();
+}
+
+function updatePlayerInfo() {
+  currentPlayerDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+  player1ScoreDisplay.textContent = `Player 1: ${playerScores[1]} matches`;
+  player2ScoreDisplay.textContent = `Player 2: ${playerScores[2]} matches`;
 }
 
 function startTimer() {
